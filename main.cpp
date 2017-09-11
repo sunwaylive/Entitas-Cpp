@@ -26,8 +26,16 @@ class DemoSystem : public IInitializeSystem, public IExecuteSystem, public ISetP
 			std::cout << "DemoSystem initialized" << std::endl;
 		}
 		void Execute() {
+			/*
+			pool管理着group，group管理着entity
+			*/
 			mPool->CreateEntity()->Add<DemoComponent>("foo", "bar");
 
+			/*
+			每一个matcher都会有一个自己的hash值,
+			在构造matcher的时候，会传入componentidlist, 然后在matcher的构造函数中, 会计算hash值.
+			然后GetGroup根据这个matcher的hash值，直接去group中的map去find就可以了
+			*/
 			auto entitiesCount = mPool->GetGroup(Matcher_AllOf(DemoComponent))->Count();
 			std::cout << "There are " << entitiesCount << " entities with the component 'DemoComponent'" << std::endl;
 
