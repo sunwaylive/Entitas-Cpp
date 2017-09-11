@@ -20,7 +20,8 @@ struct ComponentTypeId
 		{
 			static_assert((std::is_base_of<IComponent, T>::value && ! std::is_same<IComponent, T>::value),
 				"Class type must be derived from IComponent");
-			// 这句代码决定过了, 同一个类型的Component必定只执行一次,对于一个entity, 有且仅有一个component
+			// 这句代码决定过了, 同一个类型的Component必定只执行一次,即component跟 componentId是一一对应的
+			// 对于一个entity, 有且仅有一个component
 			// 从而可以用来，判定是否重复添加了该component
 			static ComponentId id = mCounter++;
 			return id;
